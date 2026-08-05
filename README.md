@@ -281,3 +281,8 @@ Third-party sources and permissions are recorded in [`ATTRIBUTION.md`](ATTRIBUTI
 ---
 
 📖 中文文档见 [README.zh-CN.md](README.zh-CN.md)
+
+
+## Hosted demo
+
+Try [Motion Anything in 即时演示](https://demo.autoclaude.cn) for a one-hour, no-setup evaluation in a hosted environment. This is an independent community demo and is not an official Motion Anything service.
