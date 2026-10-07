@@ -2,7 +2,8 @@
  * A field of vertical lines warped by 2D perlin noise; the pointer drags nearby points with a
  * friction/tension spring wake. Direct port of the react-bits component (its perlin impl is
  * self-contained). Real defaults from source; line color via data-line-color (default black —
- * designed for light backgrounds). */
+ * designed for light backgrounds). Draws at devicePixelRatio (capped at 2), pauses while off
+ * screen, and tracks the pointer on the window so overlaid hero content can't block the wake. */
 (function(g){ 'use strict';
   var DEF = { lineColor:'black', waveSpeedX:0.0125, waveSpeedY:0.005, waveAmpX:32, waveAmpY:16,
     xGap:10, yGap:32, friction:0.925, tension:0.005, maxCursorMove:100 };
@@ -53,8 +54,8 @@
     var noise = new Noise(Math.random());
     var lines = [], W=0, H=0;
     var mouse = { x:-10, y:0, lx:0, ly:0, sx:0, sy:0, v:0, vs:0, a:0, set:false };
-    function setSize(){ var r = el.getBoundingClientRect(); W = r.width; H = r.height;
-      canvas.width = W; canvas.height = H; }
+    function setSize(){ var r = el.getBoundingClientRect(), dpr = Math.min(g.devicePixelRatio || 1, 2); W = r.width; H = r.height;
+      canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); } // sharp on HiDPI screens
     function setLines(){
       lines = [];
       var oW = W + 200, oH = H + 30;
@@ -105,21 +106,28 @@
     function updateMouse(x, y){ var r = el.getBoundingClientRect();
       mouse.x = x - r.left; mouse.y = y - r.top;
       if(!mouse.set){ mouse.sx = mouse.x; mouse.sy = mouse.y; mouse.lx = mouse.x; mouse.ly = mouse.y; mouse.set = true; } }
-    el.addEventListener('mousemove', function(e){ updateMouse(e.clientX, e.clientY); }, { passive:true });
-    el.addEventListener('touchmove', function(e){ var t = e.touches[0]; updateMouse(t.clientX, t.clientY); }, { passive:true });
-    g.addEventListener('resize', function(){ setSize(); setLines(); });
-    setSize(); setLines();
-    var red = reduced();
-    function tick(t){
+    // Listen on the window: as a hero background the canvas usually sits under the hero's content,
+    // which would otherwise receive every pointer event and leave the wake dead.
+    g.addEventListener('mousemove', function(e){ updateMouse(e.clientX, e.clientY); }, { passive:true });
+    g.addEventListener('touchmove', function(e){ var t = e.touches[0]; if(t) updateMouse(t.clientX, t.clientY); }, { passive:true });
+    var red = reduced(), visible = true, running = false, last = 0;
+    function frame(t){
       mouse.sx += (mouse.x - mouse.sx)*0.1; mouse.sy += (mouse.y - mouse.sy)*0.1;
       var d = Math.hypot(mouse.x - mouse.lx, mouse.y - mouse.ly);
       mouse.vs += (d - mouse.vs)*0.1; mouse.vs = Math.min(100, mouse.vs);
       mouse.a = Math.atan2(mouse.y - mouse.ly, mouse.x - mouse.lx);
       mouse.lx = mouse.x; mouse.ly = mouse.y;
       movePoints(t); drawLines();
-      if(!red) requestAnimationFrame(tick);
     }
-    requestAnimationFrame(tick);
+    function tick(t){ last = t; frame(t); if(!red && visible) requestAnimationFrame(tick); else running = false; }
+    function run(){ if(!running){ running = true; requestAnimationFrame(tick); } }
+    // Resizing clears the canvas, so redraw a frame whenever the loop is idle (reduced motion, off screen).
+    function resize(){ setSize(); setLines(); if(!running) frame(last); }
+    if(g.ResizeObserver) new ResizeObserver(resize).observe(el); else g.addEventListener('resize', resize);
+    // Pause the loop while the field is off screen; resume when it scrolls back.
+    if(g.IntersectionObserver) new IntersectionObserver(function(es){ visible = es[0].isIntersecting; if(visible && !red) run(); }).observe(el);
+    setSize(); setLines();
+    run();
   }
   function init(){ var els=document.querySelectorAll('.waves'); for(var i=0;i<els.length;i++) start(els[i]); }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
