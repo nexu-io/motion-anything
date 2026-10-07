@@ -6,18 +6,18 @@
 .es{width:340px}</style></head>
 <body>
 <div class="badge">motion-anything · feedback-delight</div>
-<div class="es"><div class="es-track"><div class="es-fill"></div><div class="es-knob"></div></div></div>
+<div class="es"><div class="es-track"><div class="es-rail"><div class="es-fill"></div></div><div class="es-knob"></div></div></div>
 <p class="hint">Dependency-free · respects prefers-reduced-motion.</p>
 <script>
-/* recording choreography: the recipe's real springy feel, driven via WAAPI so frames are seekable */
-const spring = 'cubic-bezier(.34,1.56,.64,1)';
+/* recording choreography: the recipe's real springy feel, driven via WAAPI so frames are seekable.
+   Animates the same transforms the recipe uses (fill scaleX, knob translateX across the 340px track). */
+const spring = 'cubic-bezier(.34,1.56,.64,1)', W = 340;
 const fill = document.querySelector('.es-fill'), knob = document.querySelector('.es-knob');
 const kf = [
-  { width: '40%', offset: 0 }, { width: '40%', offset: .1 },
-  { width: '92%', offset: .42, easing: spring }, { width: '92%', offset: .58 },
-  { width: '12%', offset: .92, easing: spring }, { width: '12%', offset: 1 }
+  { p: .4, offset: 0 }, { p: .4, offset: .1 },
+  { p: .92, offset: .42, easing: spring }, { p: .92, offset: .58 },
+  { p: .12, offset: .92, easing: spring }, { p: .12, offset: 1 }
 ];
-const kf2 = kf.map(k => ({ left: k.width, offset: k.offset, easing: k.easing }));
-fill.animate(kf, { duration: 3000, iterations: Infinity });
-knob.animate(kf2, { duration: 3000, iterations: Infinity });
+fill.animate(kf.map(k => ({ transform: `scaleX(${k.p})`, offset: k.offset, easing: k.easing })), { duration: 3000, iterations: Infinity });
+knob.animate(kf.map(k => ({ transform: `translate(calc(${k.p * W}px - 50%), -50%)`, offset: k.offset, easing: k.easing })), { duration: 3000, iterations: Infinity });
 </script></body></html>
