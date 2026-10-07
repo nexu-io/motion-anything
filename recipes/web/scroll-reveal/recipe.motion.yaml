@@ -39,8 +39,9 @@ implementations:
   - tech: css+js
     files: [scroll-reveal.css, scroll-reveal.js]
     usage: |
-      Add data-reveal to any element (optionally data-reveal-delay="80"). Link the css + js;
-      an IntersectionObserver adds .is-in when the element scrolls into view.
+      Add data-reveal to any element (optionally data-reveal-delay="80"). Link the css + js.
+      Content rests visible: below-the-fold elements are primed just before they scroll in,
+      then revealed (.is-in) on entry; on-screen content is never hidden.
 
 license:
   spdx: Apache-2.0
