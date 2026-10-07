@@ -1,7 +1,7 @@
 ---
 name: rotating-text
 description: |
-  One word swaps for the next in place — a compact way to cycle a few phrases in a headline. One rotator per view; short words. Under prefers-reduced-motion it swaps text with no travel.
+  One word swaps for the next in place — a compact way to cycle a few phrases in a headline. One rotator per view; short words. Under prefers-reduced-motion it stays static on the first word.
 triggers: ["rotating words","cycling text","轮换文字","词语轮播"]
 od: { mode: prototype, surface: web, platform: desktop, category: animation-motion, preview: { type: html }, design_system: { requires: false } }
 ---
