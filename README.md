@@ -196,6 +196,8 @@ motion-anything is not a standalone island — it is the **motion layer of the [
 
 The loop: *pick a beautiful design system (OD's superpower) → generate a brand-grade page → give it motion, per component (our superpower) → export it back as a skill anyone's agent can reuse.*
 
+If you already have a reference clip, [OpenMotion](https://github.com/nexu-io/openmotion) can recreate its shots as editable HTML. Swap in your own footage and captions, then export an MP4.
+
 ---
 
 ## Quickstart

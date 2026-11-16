@@ -190,6 +190,8 @@ motion-anything 不是孤岛 —— 它是 [Open Design](https://github.com/nexu
 
 闭环是：*选一套好看的设计系统（OD 的强项）→ 生成品牌级页面 → 逐组件给它动效（我们的强项）→ 导出成 skill 让任何人的 agent 复用。*
 
+如果你手头已有参考视频，可以用 [OpenMotion](https://github.com/nexu-io/openmotion) 把镜头复刻成可编辑的 HTML，换成自己的素材和字幕，再导出 MP4。
+
 ---
 
 ## 快速开始
