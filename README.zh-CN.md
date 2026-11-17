@@ -190,6 +190,8 @@ motion-anything 不是孤岛 —— 它是 [Open Design](https://github.com/nexu
 
 闭环是：*选一套好看的设计系统（OD 的强项）→ 生成品牌级页面 → 逐组件给它动效（我们的强项）→ 导出成 skill 让任何人的 agent 复用。*
 
+[OpenMotion](https://github.com/nexu-io/openmotion) 是一个由 AI Agent 驱动的全栈视频创作工作台，也是 Claude Motion 与 CapCut 的开源替代方案。上传参考视频或粘贴社交平台上的视频链接，就能用自己的品牌视觉规范和文案复刻原片。
+
 ---
 
 ## 快速开始
