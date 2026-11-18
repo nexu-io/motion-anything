@@ -40,7 +40,8 @@ A number that animates up to its target on enter. Part of
 ## How to apply
 1. Copy `count-up.css` and `count-up.js` and link them.
 2. Mark numbers: `<span data-count="10000" data-count-suffix="+">0</span>`
-   (optional `data-count-prefix="$"`, `data-count-duration="900"`).
+   (optional `data-count-prefix="$"`, `data-count-duration="900"`, and `data-count-decimals="1"`
+   for non-integer figures such as `4.9` or `99.9%`).
 
 ## Accessibility & performance
 - `prefers-reduced-motion`: final value shown immediately. Tabular figures keep width steady.

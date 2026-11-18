@@ -8,4 +8,8 @@ od: { mode: prototype, surface: web, platform: desktop, category: animation-moti
 # elastic-slider
 Elastic Slider Dependency-free, reduced-motion safe.
 ## How to apply
-Copy css+js; `<div class="es"><div class="es-track"><div class="es-fill"></div><div class="es-knob"></div></div></div>`.
+Copy css+js; `<div class="es"><div class="es-track" aria-label="Volume"><div class="es-fill"></div><div class="es-knob"></div></div></div>`.
+## Accessibility & performance
+- Transforms only: the fill scales (`scaleX`) and the knob translates, so dragging never triggers layout (MOTION-SPEC §5).
+- The track becomes a keyboard-operable `role="slider"` (arrows ±1, PageUp/PageDown ±10, Home/End) and reports `aria-valuenow` 0–100. Give it an `aria-label`.
+- `touch-action: none` on the track, so a drag on a touch screen moves the slider instead of scrolling the page.

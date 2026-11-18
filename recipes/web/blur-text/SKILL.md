@@ -9,4 +9,5 @@ od: { mode: prototype, surface: web, platform: desktop, category: animation-moti
 # blur-text
 A headline that resolves from blur, word by word. Dependency-free, reduced-motion safe.
 ## How to apply
-Copy css+js; `<h1 data-blur-text>Your headline</h1>`.
+Copy css+js; `<h1 data-blur-text>Your headline</h1>`. Inline markup inside the heading (`<em>`,
+`<strong>`, links) is kept: each word is wrapped where it stands.

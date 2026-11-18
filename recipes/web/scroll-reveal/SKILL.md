@@ -46,11 +46,15 @@ A gentle rise + fade as elements scroll into view. Part of
    <section data-reveal>…</section>
    <li data-reveal data-reveal-delay="80">…</li>   <!-- optional stagger, ms -->
    ```
-3. An IntersectionObserver adds `.is-in` once, when the element enters the viewport.
+3. Content rests visible. Just before a below-the-fold element scrolls in, the script primes it
+   (`.is-primed` hides it), then adds `.is-in` once it enters the viewport. Elements already on
+   screen at load are never hidden, which keeps the "don't delay above-the-fold content" rule.
 
 ## Accessibility & performance
-- `prefers-reduced-motion`: everything is shown immediately, no travel.
-- Animates `transform`/`opacity` only; unobserves each element after it reveals.
+- `prefers-reduced-motion`: nothing is primed, so everything simply shows, with no travel.
+- No JS, print, screenshots and HTML→video frame capture all see the content: nothing is hidden
+  unless the script primed it, and a print rule unhides primed elements.
+- Animates `transform`/`opacity` only; unobserves each element once it is primed / revealed.
 
 ## Framework notes
 - React: render `data-reveal` attributes and run the init (or an equivalent `useEffect` +
